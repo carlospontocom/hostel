@@ -1,12 +1,15 @@
 
 import './App.css'
-import { FormularioAgendamento } from './components/FormularioAgendamento/FormularioAgendamento'
+// import { FormularioAgendamento } from './components/FormularioAgendamento/FormularioAgendamento'
 
 function App() {
 
   return (
     <>
-      <FormularioAgendamento />
+      {/* <FormularioAgendamento /> */}
+      <h2>
+        Bem vindo ao sistema de agendamento!
+      </h2>
     </>
   )
 }
