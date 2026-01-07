@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Paradise - Reservas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            color: #1a2980;
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            color: #1a2980;
+            font-size: 1.8rem;
+        }
+
+        .logo span {
+            color: #26d0ce;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #26d0ce;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info i {
+            color: #1a2980;
+            font-size: 1.5rem;
+        }
+
+        /* Main Content */
+        main {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+        }
+
+        /* Booking Form */
+        .booking-form {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .booking-form h2 {
+            color: #1a2980;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #26d0ce;
+        }
+
+        .calendar-icon {
+            position: relative;
+        }
+
+        .calendar-icon i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #1a2980;
+        }
+
+        .room-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .room-option {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .room-option:hover {
+            border-color: #26d0ce;
+            background-color: #f0fdfd;
+        }
+
+        .room-option.selected {
+            border-color: #1a2980;
+            background-color: #e8f0ff;
+        }
+
+        .room-option i {
+            font-size: 2rem;
+            color: #1a2980;
+            margin-bottom: 10px;
+        }
+
+        .room-option h4 {
+            margin-bottom: 5px;
+            color: #1a2980;
+        }
+
+        .price {
+            color: #26d0ce;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(to right, #1a2980, #26d0ce);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 18px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hotel Info */
+        .hotel-info {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .hotel-info h2 {
+            color: #1a2980;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hotel-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .hotel-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hotel-features li:last-child {
+            border-bottom: none;
+        }
+
+        .hotel-features i {
+            color: #26d0ce;
+            width: 25px;
+        }
+
+        .booking-summary {
+            background-color: #f8f9ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .booking-summary h3 {
+            color: #1a2980;
+            margin-bottom: 15px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #1a2980;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #ddd;
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+            color: #555;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .footer-contact {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .room-selection {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            nav ul {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .room-selection {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-contact {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-hotel"></i>
+                <h1>Hotel <span>Paradise</span></h1>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="#"><i class="fas fa-concierge-bell"></i> Serviços</a></li>
+                    <li><a href="#"><i class="fas fa-images"></i> Galeria</a></li>
+                    <li><a href="#"><i class="fas fa-phone-alt"></i> Contato</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>Bem-vindo, Carlos!</span>
+            </div>
+        </header>
+        
+        <main>
+            <section class="booking-form">
+                <h2><i class="fas fa-calendar-alt"></i> Faça sua Reserva</h2>
+                
+                <form id="reservationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="checkin"><i class="fas fa-sign-in-alt"></i> Check-in</label>
+                            <div class="calendar-icon">
+                                <input type="date" id="checkin" name="checkin" required>
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="checkout"><i class="fas fa-sign-out-alt"></i> Check-out</label>
+                            <div class="calendar-icon">
+                                <input type="date" id="checkout" name="checkout" required>
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="guests"><i class="fas fa-users"></i> Hóspedes</label>
+                            <select id="guests" name="guests" required>
+                                <option value="1">1 Adulto</option>
+                                <option value="2" selected>2 Adultos</option>
+                                <option value="3">3 Adultos</option>
+                                <option value="4">4 Adultos</option>
+                                <option value="5">Família (2 adultos + 2 crianças)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nights"><i class="fas fa-moon"></i> Noites</label>
+                            <input type="number" id="nights" name="nights" min="1" max="30" value="3" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-bed"></i> Tipo de Quarto</label>
+                        <div class="room-selection">
+                            <div class="room-option" onclick="selectRoom(this)" data-price="250">
+                                <i class="fas fa-bed"></i>
+                                <h4>Standard</h4>
+                                <p>Cama simples</p>
+                                <div class="price">R$ 250/noite</div>
+                            </div>
+                            
+                            <div class="room-option selected" onclick="selectRoom(this)" data-price="380">
+                                <i class="fas fa-bed"></i>
+                                <h4>Deluxe</h4>
+                                <p>Cama queen size</p>
+                                <div class="price">R$ 380/noite</div>
+                            </div>
+                            
+                            <div class="room-option" onclick="selectRoom(this)" data-price="550">
+                                <i class="fas fa-couch"></i>
+                                <h4>Suíte</h4>
+                                <p>Com varanda</p>
+                                <div class="price">R$ 550/noite</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="specialRequests"><i class="fas fa-star"></i> Pedidos Especiais</label>
+                        <textarea id="specialRequests" name="specialRequests" rows="3" placeholder="Alguma solicitação especial? (cama extra, comida, etc.)"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-check-circle"></i> Confirmar Reserva
+                    </button>
+                </form>
+            </section>
+            
+            <aside class="hotel-info">
+                <h2><i class="fas fa-info-circle"></i> Sobre o Hotel</h2>
+                
+                <ul class="hotel-features">
+                    <li><i class="fas fa-wifi"></i> Wi-Fi Grátis em todas as áreas</li>
+                    <li><i class="fas fa-swimming-pool"></i> Piscina aquecida</li>
+                    <li><i class="fas fa-utensils"></i> Café da manhã incluso</li>
+                    <li><i class="fas fa-spa"></i> Spa e centro de bem-estar</li>
+                    <li><i class="fas fa-dumbbell"></i> Academia 24h</li>
+                    <li><i class="fas fa-parking"></i> Estacionamento gratuito</li>
+                    <li><i class="fas fa-cocktail"></i> Bar e restaurante</li>
+                    <li><i class="fas fa-concierge-bell"></i> Serviço de quarto 24h</li>
+                </ul>
+                
+                <div class="booking-summary">
+                    <h3><i class="fas fa-file-invoice-dollar"></i> Resumo da Reserva</h3>
+                    <div class="summary-item">
+                        <span>Quarto Deluxe</span>
+                        <span>R$ 380/noite</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>3 Noites</span>
+                        <span>R$ 1.140,00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Taxas e impostos</span>
+                        <span>R$ 85,50</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Café da manhã</span>
+                        <span>INCLUÍDO</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>TOTAL</span>
+                        <span>R$ 1.225,50</span>
+                    </div>
+                </div>
+            </aside>
+        </main>
+        
+        <footer>
+            <p>Hotel Paradise &copy; 2023 - Todos os direitos reservados</p>
+            <div class="footer-contact">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>(11) 3456-7890</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>reservas@hotelparadise.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Av. das Palmeiras, 1234 - São Paulo, SP</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Seleção de quarto
+        function selectRoom(element) {
+            // Remove a classe 'selected' de todos os quartos
+            document.querySelectorAll('.room-option').forEach(room => {
+                room.classList.remove('selected');
+            });
+            
+            // Adiciona a classe 'selected' ao quarto clicado
+            element.classList.add('selected');
+            
+            // Atualiza o resumo da reserva
+            updateBookingSummary();
+        }
+        
+        // Atualiza o resumo da reserva
+        function updateBookingSummary() {
+            const nights = parseInt(document.getElementById('nights').value) || 3;
+            const selectedRoom = document.querySelector('.room-option.selected');
+            const pricePerNight = parseInt(selectedRoom.getAttribute('data-price'));
+            const roomType = selectedRoom.querySelector('h4').textContent;
+            
+            const roomTotal = pricePerNight * nights;
+            const taxes = roomTotal * 0.075; // 7.5% de taxas
+            const total = roomTotal + taxes;
+            
+            // Atualiza os valores no resumo
+            document.querySelector('.booking-summary .summary-item:nth-child(1) span:first-child').textContent = `Quarto ${roomType}`;
+            document.querySelector('.booking-summary .summary-item:nth-child(1) span:last-child').textContent = `R$ ${pricePerNight}/noite`;
+            document.querySelector('.booking-summary .summary-item:nth-child(2) span:last-child').textContent = `R$ ${roomTotal.toFixed(2)}`;
+            document.querySelector('.booking-summary .summary-item:nth-child(3) span:last-child').textContent = `R$ ${taxes.toFixed(2)}`;
+            document.querySelector('.booking-summary .total span:last-child').textContent = `R$ ${total.toFixed(2)}`;
+        }
+        
+        // Atualiza o resumo quando o número de noites muda
+        document.getElementById('nights').addEventListener('input', updateBookingSummary);
+        
+        // Configura datas mínimas para check-in e check-out
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('checkin').min = today;
+        
+        // Atualiza a data mínima do check-out quando o check-in muda
+        document.getElementById('checkin').addEventListener('change', function() {
+            document.getElementById('checkout').min = this.value;
+        });
+        
+        // Processa o formulário de reserva
+        document.getElementById('reservationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const checkin = document.getElementById('checkin').value;
+            const checkout = document.getElementById('checkout').value;
+            const guests = document.getElementById('guests').value;
+            const nights = document.getElementById('nights').value;
+            const roomType = document.querySelector('.room-option.selected h4').textContent;
+            
+            // Simulação de envio da reserva
+            alert(`✅ Reserva confirmada!\n\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nHóspedes: ${guests}\nNoites: ${nights}\nQuarto: ${roomType}\n\nObrigado por escolher o Hotel Paradise!`);
+            
+            // Aqui normalmente enviaria os dados para um servidor
+            console.log({
+                checkin,
+                checkout,
+                guests,
+                nights,
+                roomType
+            });
+        });
+        
+        // Inicializa o resumo da reserva
+        updateBookingSummary();
+    </script>
+</body>
+</html>
